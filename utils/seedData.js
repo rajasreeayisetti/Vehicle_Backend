@@ -3,9 +3,7 @@ const dotenv = require('dotenv');
 const bcrypt = require('bcryptjs');
 const Vehicle = require('../models/Vehicle');
 const Customer = require('../models/Customer');
-
 dotenv.config();
-
 const vehicles = [
     {
         vehicleName: 'Tesla Model 3',
@@ -80,15 +78,12 @@ const vehicles = [
         imageUrl: 'https://images.unsplash.com/photo-1603386090075-8404a3774641?auto=format&fit=crop&q=80&w=800'
     }
 ];
-
 const seedData = async () => {
     try {
         await mongoose.connect(process.env.MONGO_URI);
-
         // Seed Vehicles
         await Vehicle.deleteMany();
         await Vehicle.insertMany(vehicles);
-
         // Seed Demo User
         await Customer.deleteMany();
         const salt = await bcrypt.genSalt(10);
@@ -100,7 +95,6 @@ const seedData = async () => {
             address: '123 Tech Lane',
             password: hashedPassword
         });
-
         console.log('Data Seeded Successfully');
         process.exit();
     } catch (error) {
@@ -108,5 +102,4 @@ const seedData = async () => {
         process.exit(1);
     }
 };
-
 seedData();

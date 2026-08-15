@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-
 const vehicleSchema = mongoose.Schema({
     vehicleName: { type: String, required: true },
     vehicleType: { type: String, required: true },
@@ -9,5 +8,4 @@ const vehicleSchema = mongoose.Schema({
     gpsEnabled: { type: Boolean, default: false },
     imageUrl: { type: String }, // For frontend display
 }, { timestamps: true });
-
 module.exports = mongoose.model('Vehicle', vehicleSchema);

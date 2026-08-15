@@ -1,5 +1,4 @@
 const Vehicle = require('../models/Vehicle');
-
 // @desc    Add a new vehicle
 // @route   POST /api/vehicles
 const addVehicle = async (req, res) => {
@@ -10,7 +9,6 @@ const addVehicle = async (req, res) => {
         res.status(400).json({ message: error.message });
     }
 };
-
 // @desc    Get all vehicles
 // @route   GET /api/vehicles
 const getVehicles = async (req, res) => {
@@ -21,7 +19,6 @@ const getVehicles = async (req, res) => {
         res.status(500).json({ message: error.message });
     }
 };
-
 // @desc    Update a vehicle
 // @route   PUT /api/vehicles/:id
 const updateVehicle = async (req, res) => {
@@ -33,7 +30,6 @@ const updateVehicle = async (req, res) => {
         res.status(400).json({ message: error.message });
     }
 };
-
 // @desc    Delete a vehicle
 // @route   DELETE /api/vehicles/:id
 const deleteVehicle = async (req, res) => {
@@ -45,5 +41,4 @@ const deleteVehicle = async (req, res) => {
         res.status(500).json({ message: error.message });
     }
 };
-
 module.exports = { addVehicle, getVehicles, updateVehicle, deleteVehicle };

@@ -2,9 +2,7 @@ const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 const bcrypt = require('bcryptjs');
 const Customer = require('./models/Customer');
-
 dotenv.config();
-
 const test = async () => {
     try {
         await mongoose.connect(process.env.MONGO_URI);
@@ -22,5 +20,4 @@ const test = async () => {
         process.exit(1);
     }
 };
-
 test();

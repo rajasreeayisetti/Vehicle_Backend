@@ -2,7 +2,6 @@ const Customer = require('../models/Customer');
 const Booking = require('../models/Booking');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-
 // @desc    Register a new customer
 // @route   POST /api/customers
 const registerCustomer = async (req, res) => {
@@ -10,16 +9,12 @@ const registerCustomer = async (req, res) => {
     try {
         const customerExists = await Customer.findOne({ email });
         if (customerExists) return res.status(400).json({ message: 'Customer already exists' });
-
         const salt = await bcrypt.genSalt(10);
         const hashedPassword = await bcrypt.hash(password, salt);
-
         const customer = await Customer.create({
             name, email, phone, address, password: hashedPassword
         });
-
         const token = jwt.sign({ id: customer._id }, process.env.JWT_SECRET, { expiresIn: '30d' });
-
         res.status(201).json({
             _id: customer._id,
             name: customer.name,
@@ -30,7 +25,6 @@ const registerCustomer = async (req, res) => {
         res.status(400).json({ message: error.message });
     }
 };
-
 // @desc    Get customer profile
 // @route   GET /api/customers/:id
 const getCustomerProfile = async (req, res) => {
@@ -42,7 +36,6 @@ const getCustomerProfile = async (req, res) => {
         res.status(500).json({ message: error.message });
     }
 };
-
 // @desc    Get customer booking history
 // @route   GET /api/customers/:id/bookings
 const getCustomerBookings = async (req, res) => {
@@ -53,7 +46,6 @@ const getCustomerBookings = async (req, res) => {
         res.status(500).json({ message: error.message });
     }
 };
-
 // @desc    Auth customer & get token
 // @route   POST /api/customers/login
 const authCustomer = async (req, res) => {
@@ -65,10 +57,8 @@ const authCustomer = async (req, res) => {
             console.log('Customer not found');
             return res.status(401).json({ message: 'Invalid email or password' });
         }
-
         const isMatch = await bcrypt.compare(password, customer.password);
         console.log(`Password match: ${isMatch}`);
-
         if (isMatch) {
             const token = jwt.sign({ id: customer._id }, process.env.JWT_SECRET, { expiresIn: '30d' });
             res.json({
@@ -85,5 +75,4 @@ const authCustomer = async (req, res) => {
         res.status(500).json({ message: error.message });
     }
 };
-
 module.exports = { registerCustomer, authCustomer, getCustomerProfile, getCustomerBookings };

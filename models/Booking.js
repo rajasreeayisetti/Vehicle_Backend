@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-
 const bookingSchema = mongoose.Schema({
     customerId: { type: mongoose.Schema.Types.ObjectId, ref: 'Customer', required: true },
     vehicleId: { type: mongoose.Schema.Types.ObjectId, ref: 'Vehicle', required: true },
@@ -9,5 +8,4 @@ const bookingSchema = mongoose.Schema({
     paymentStatus: { type: String, default: 'Pending' },
     invoiceUrl: { type: String },
 }, { timestamps: true });
-
 module.exports = mongoose.model('Booking', bookingSchema);
