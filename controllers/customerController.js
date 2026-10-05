@@ -40,7 +40,12 @@ const getCustomerProfile = async (req, res) => {
 // @route   GET /api/customers/:id/bookings
 const getCustomerBookings = async (req, res) => {
     try {
-        const bookings = await Booking.find({ customerId: req.params.id }).populate('vehicleId');
+        const { checkAndUpdateBookingStatuses } = require('../utils/bookingStatusHelper');
+        await checkAndUpdateBookingStatuses();
+        const bookings = await Booking.find({ customerId: req.params.id })
+            .populate('vehicleId')
+            .populate('customerId', 'name email phone')
+            .sort({ createdAt: -1 });
         res.json(bookings);
     } catch (error) {
         res.status(500).json({ message: error.message });

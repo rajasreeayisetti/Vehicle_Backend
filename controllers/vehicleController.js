@@ -1,8 +1,12 @@
 const Vehicle = require('../models/Vehicle');
+const { checkAndUpdateBookingStatuses } = require('../utils/bookingStatusHelper');
 // @desc    Add a new vehicle
 // @route   POST /api/vehicles
 const addVehicle = async (req, res) => {
     try {
+        if (!req.body.regNumber) {
+            req.body.regNumber = `DE-` + Math.floor(1000 + Math.random() * 9000) + `-AX`;
+        }
         const vehicle = await Vehicle.create(req.body);
         res.status(201).json(vehicle);
     } catch (error) {
@@ -13,6 +17,7 @@ const addVehicle = async (req, res) => {
 // @route   GET /api/vehicles
 const getVehicles = async (req, res) => {
     try {
+        await checkAndUpdateBookingStatuses();
         const vehicles = await Vehicle.find({});
         res.json(vehicles);
     } catch (error) {

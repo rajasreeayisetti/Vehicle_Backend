@@ -16,5 +16,4 @@ const test = async () => {
         process.exit(1);
     }
 };
-
 test();

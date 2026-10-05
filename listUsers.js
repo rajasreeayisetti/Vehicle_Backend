@@ -11,5 +11,4 @@ const test = async () => {
     });
     process.exit();
 };
-
 test();

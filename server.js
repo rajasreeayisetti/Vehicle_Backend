@@ -3,6 +3,7 @@ const dotenv = require('dotenv');
 const cors = require('cors');
 const path = require('path');
 const connectDB = require('./config/db');
+const { checkAndUpdateBookingStatuses } = require('./utils/bookingStatusHelper');
 dotenv.config();
 connectDB();
 const app = express();
@@ -19,6 +20,13 @@ app.get('*', (req, res) => {
     res.sendFile(path.join(frontendPath, 'index.html'));
 });
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => {
+app.listen(PORT, async () => {
     console.log(`Server running on port ${PORT}`);
+    // Initial status check & set periodic check every 60s
+    try {
+        await checkAndUpdateBookingStatuses();
+        setInterval(checkAndUpdateBookingStatuses, 60000);
+    } catch (e) {
+        console.error('Error starting status checker loop:', e);
+    }
 });

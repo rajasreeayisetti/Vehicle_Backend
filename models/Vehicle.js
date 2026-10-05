@@ -7,5 +7,7 @@ const vehicleSchema = mongoose.Schema({
     maintenanceStatus: { type: String, default: 'Available' },
     gpsEnabled: { type: Boolean, default: false },
     imageUrl: { type: String }, // For frontend display
+    regNumber: { type: String }
 }, { timestamps: true });
 module.exports = mongoose.model('Vehicle', vehicleSchema);
+
